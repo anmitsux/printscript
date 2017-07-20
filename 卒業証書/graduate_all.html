@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <title>卒業証書一括印刷</title>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+
+  <style>
+  @import url(https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+  @import url(https://fonts.googleapis.com/css?family=Dosis:200,400);
+  /*@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);*/
+  body,input{
+    font-family: "游ゴシック", YuGothic, "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+  }
+  main{
+    width: 100%;
+    text-align: center;
+    font-weight: 100;
+  }
+  main h2{
+    font-weight: 100;
+  }
+  @page{
+    size: A4 landscape;
+    margin: 0;
+  }
+  @media print {
+    body{
+      width:297mm;
+    }
+  .close{
+    display: none;
+  }
+  .wrap{
+    box-shadow: none;
+    margin:0;
+  }
+  /*main h2{
+    display: none;
+  }*/
+  .loading{
+    display: none;
+  }
+  /*header{
+    display: none;
+  }*/
+  .print_btn{
+    display: none;
+  }
+  }
+  header{
+    font-family: 'Dosis', sans-serif;
+    font-size: 30px;
+    color:#ccc;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+  }
+  .publish_no, .text_title, .name, .birthday, .mid_text, .graduate_date, .last_text_a, .last_text_b {
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    display: inline-block;
+    float: right;
+    font-family: "HG行書体";
+  }
+  .publish_no,.birthday,.last_text_a,.last_text_b,.graduate_date{
+    font-size: 26px;
+  }
+  .graduate_date{
+    line-height: 2;
+  }
+  .last_text_a{
+    padding-top: 40px;
+    line-height: 2;
+  }
+  .last_text_b{
+    padding-top: 220px;
+    line-height: 2;
+  }
+  .name{
+    font-size: 40px;
+    padding-top: 190px;
+    padding-right: 10px;
+  }
+  .birthday{
+    letter-spacing: -2.1px;
+    padding-top: 95px;
+    padding-right: 20px;
+  }
+  .mid_text{
+    line-height: 2.5;
+    font-size: 40px;
+    height: 440px;
+    padding-top: 20px;
+  }
+  .mid_text span{
+    font-size: 44px;
+  }
+  .text_title{
+    font-size: 90px;
+    padding-top: 30px;
+    padding-right: 20px;
+    line-height: 100px;
+  }
+  .wrap{
+    display: block;
+    overflow: hidden;
+    height: 209mm;
+    width: 297mm; /* A4縦の幅 */
+    box-shadow: 0 .5mm 2mm rgba(0,0,0,.3); /* ドロップシャドウ */
+    background: #fff;
+    margin: 5mm;
+  }
+  .print_row{
+    padding-top: 200px;
+    padding-right: 180px;
+    page-break-after: always;
+  }
+  .preview{
+    display: none;
+    top:0;
+    left:0;
+    right: 0;
+    /*border: 0;*/
+    height: 100%;
+    position: fixed;
+    background: #eee;
+    z-index: 100;
+    overflow-y: scroll;
+  }
+  .close{
+    position: fixed;
+    right:20px;
+    top:10px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .print_btn{
+    position: fixed;
+    right:60px;
+    top:10px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  #preview_btn{
+    padding: 10px 30px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    background: #eee;
+    box-shadow: none;
+    border: none;
+  }
+  #progress_bar {
+      margin: 10px 0;
+      width: 100%;
+      padding: 3px;
+      border: 1px solid #000;
+      font-size: 14px;
+      clear: both;
+      opacity: 0;
+      position:fixed;
+      top:0;
+      left:0;
+      -moz-transition: opacity 1s linear;
+      -o-transition: opacity 1s linear;
+      -webkit-transition: opacity 1s linear;
+      }
+      #progress_bar.loading {
+      opacity: 1.0;
+      }
+      #progress_bar .percent {
+      background-color: #99ccff;
+      height: auto;
+      width: 0;
+      }
+  #files{
+    opacity: 0;
+    display: none;
+  }
+  .overdesign{
+    font-size: 18px;
+    font-weight:100;
+    cursor: pointer;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    width:200px;
+    padding: 10px;
+    margin: 0 auto;
+
+  }
+  .notification{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width:100%;
+    height:50px;
+    background: #d25400;
+    font-size: 12px;
+    color: #fff;
+  }
+  .notifi_close{
+    position: absolute;
+    right:10px;
+    top:10px;
+    cursor: pointer;
+  }
+  .notifi_str{
+    font-size: 16px;
+    display: inline-block;
+    text-align: left;
+    width:90%;
+    height: 40px;
+  }
+  .notifi_icon{
+    display: inline-block;
+    width:40px;
+    height: 40px;
+    font-size: 30px;
+  }
+  </style>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      Print
+    </header>
+    <div id="progress_bar"><div class="percent">0%</div></div>
+    <h2>卒業証書一括印刷</h2>
+    <p><label for="">卒業年月日 </label><input id="graduate_input" type="date" name="graduate_date" value="" placeholder="2017/03/08" step="7"></p>
+    <label for="files"><input type="file" id="files" name="files[]" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple />
+      <div class="overdesign">
+      <i class="fa fa-cloud-upload" aria-hidden="true"></i>UPLOAD
+      </div>
+    </label>
+
+    <div class="notification">
+      <div class="notifi_close">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
+      <div class="notifi_contents">
+        <div class="notifi_icon">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </div>
+        <div class="notifi_str">
+          一度ブラウザをリロードしてから卒業年月日を指定してからcsvファイルをアップロードしてください。
+        </div>
+      </div>
+    </div>
+    <p><button type="button" name="button" id="preview_btn">プレビュー</button></p>
+    <div class="preview">
+      <div class="close">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
+      <div class="print_btn" alt="印刷">
+        <i class="fa fa-print" aria-hidden="true"></i>
+      </div>
+
+    </div>
+  </main>
+<script type="text/javascript" src="js/readcsv.js"></script>
+</body>
+
+</html>
