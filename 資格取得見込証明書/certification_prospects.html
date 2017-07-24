@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-  <title>卒業証書一括印刷</title>
+  <title>保育士資格取得見込証明書</title>
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
 
   <style>
@@ -25,12 +25,12 @@
     font-weight: 100;
   }
   @page{
-    size: A4 landscape;
+    size: A4;
     margin: 0;
   }
   @media print {
     body{
-      width:297mm;
+      width:210mm;
     }
   .close{
     display: none;
@@ -60,65 +60,94 @@
     padding: 15px 0;
     text-align: center;
   }
-  .publish_no, .text_title, .name, .birthday, .mid_text, .graduate_date, .last_text_a, .last_text_b {
-    -webkit-writing-mode: vertical-rl;
-    -ms-writing-mode: tb-rl;
-    writing-mode: vertical-rl;
-    display: inline-block;
-    float: right;
-    font-family: "HG行書体";
+  .publish_no, .text_title, .name, .birthday, .mid_text, .certificate_prospects_date,.publish_date, .last_text_a, .last_text_b {
+    font-family: "游明朝", "YuMincho", serif !important;
+
   }
-  .publish_no,.birthday,.last_text_a,.last_text_b,.graduate_date{
-    font-size: 26px;
+  .publish_no,.birthday,.last_text_a,.last_text_b,.certificate_prospects_date,.name,.text_title,.mid_text{
+    font-size: 16px;
   }
-  .graduate_date{
+  .certificate_prospects_date{
     line-height: 2;
+    text-align: right;
+    padding-bottom: 40px;
   }
   .last_text_a{
-    padding-top: 40px;
+    /*padding-top: 40px;*/
     line-height: 2;
+    text-align: left;
+    padding-bottom: 40px;
   }
+  .last_text_a span{
+    display: inherit;
+    width: 100%;
+    padding-bottom: 30px;
+  }
+  .last_text_a span:nth-child(2){
+    padding-bottom: 0;
+  }
+
   .last_text_b{
-    padding-top: 220px;
+    /*padding-top: 220px;*/
     line-height: 2;
+    text-align: right;
+    position: relative;
+  }
+  .last_text_b span{
+    display: inherit;
+    width: 100%;
+    padding-bottom: 30px;
+  }
+  .last_text_b span:nth-child(2){
+    padding-bottom: 0;
+  }
+  .last_text_b div{
+    position: absolute;
+    z-index: 100;
+    top:-30px;
+    right:-40px;
   }
   .name{
-    font-size: 40px;
-    padding-top: 190px;
-    padding-right: 10px;
+    text-align: left;
+    padding-bottom: 15px;
   }
   .birthday{
-    letter-spacing: -2.1px;
-    padding-top: 95px;
-    padding-right: 20px;
+    text-align: left;
   }
   .mid_text{
     line-height: 2.5;
-    font-size: 40px;
-    height: 440px;
-    padding-top: 20px;
+    padding-top: 35px;
+    padding-bottom: 80px;
+    text-align: left;
   }
-  .mid_text span{
+  .publish_date{
+    text-align: left;
+    padding-bottom: 60px;
+  }
+  /*.mid_text span{
     font-size: 44px;
+  }*/
+  .publish_no{
+    text-align: right;
   }
   .text_title{
-    font-size: 90px;
-    padding-top: 30px;
-    padding-right: 20px;
+    text-align: center;
     line-height: 100px;
+  }
+  .nameAndbirthday{
+    padding-left: 390px;
   }
   .wrap{
     display: block;
     overflow: hidden;
-    height: 209mm;
-    width: 297mm; /* A4縦の幅 */
+    height: 296mm;
+    width: 210mm; /* A4縦の幅 */
     box-shadow: 0 .5mm 2mm rgba(0,0,0,.3); /* ドロップシャドウ */
     background: #fff;
     margin: 5mm;
   }
   .print_row{
-    padding-top: 200px;
-    padding-right: 180px;
+    padding:110px 90px 0 90px;
     page-break-after: always;
   }
   .preview{
@@ -239,8 +268,8 @@
       Print
     </header>
     <div id="progress_bar"><div class="percent">0%</div></div>
-    <h2>卒業証書一括印刷</h2>
-    <p><label for="">卒業年月日 </label><input id="graduate_input" type="date" name="graduate_date" value="" placeholder="2017/03/08" step="7"></p>
+    <h2>保育士資格取得見込証明書</h2>
+    <p><label for="">資格取得見込年月日 </label><input id="certificate_prospects_input" type="date" name="certificate_prospects_input" value="" placeholder="2017/03/08" step="7"></p>
     <label id="file_id" for="files"><input type="file" id="files" name="files[]" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple />
       <div class="overdesign">
       <i class="fa fa-cloud-upload" aria-hidden="true"></i>UPLOAD
@@ -268,7 +297,19 @@
       <div class="print_btn" alt="印刷">
         <i class="fa fa-print" aria-hidden="true"></i>
       </div>
-
+      <!-- <div class="wrap"><div class="print_row">
+        <div class="publish_no">29-03-105</div>
+        <div class="text_title">指定保育士養成施設卒業見込証明書</div>
+        <div class="nameAndbirthday">
+          <div class="name">氏　　名 伊藤　友美</div>
+          <div class="birthday">生年月日 昭和48年　10月21日</div>
+        </div>
+        <div class="mid_text">　児童福祉法第十八条の六第一号の規定により指定された指定保育士養成施設において児童福祉法施行規則第六条の二第一項第三号の規定による修業教科目及び単位数を同号の規定により履修して卒業する見込の者であることを証明する。</div>
+        <div class="certificate_prospects_date">【平成29年11月 卒業見込】</div>
+        <div class="publish_date">平成29年7月20日</div>
+        <div class="last_text_a"><span>施設所在地　札幌市中央区大通西18丁目2番8号　1階</span><span>施設名称　指定保育士養成施設　こども學舎</span></div>
+        <div class="last_text_b"><span>施設長　　　　　河村　敦子　　　　　　　</span><span>（平成25年3月8日　北海厚発0308第5号）</span><div><img width="90" height="90" src="https://lh3.google.com/u/0/d/0B2rk3X5Ek1qKNzh4Z0lCUFU0U2c=w1920-h857-iv1"></div></div>
+      </div></div> -->
     </div>
   </main>
 <script type="text/javascript" src="js/readcsv.js"></script>

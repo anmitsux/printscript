@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-  <title>卒業証書一括印刷</title>
+  <title>在学証明書＆領収書</title>
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
 
   <style>
@@ -25,12 +25,12 @@
     font-weight: 100;
   }
   @page{
-    size: A4 landscape;
+    size: A4;
     margin: 0;
   }
   @media print {
     body{
-      width:297mm;
+      width:210mm;
     }
   .close{
     display: none;
@@ -60,65 +60,148 @@
     padding: 15px 0;
     text-align: center;
   }
-  .publish_no, .text_title, .name, .birthday, .mid_text, .graduate_date, .last_text_a, .last_text_b {
-    -webkit-writing-mode: vertical-rl;
-    -ms-writing-mode: tb-rl;
-    writing-mode: vertical-rl;
-    display: inline-block;
-    float: right;
-    font-family: "HG行書体";
+  .publish_no,.publish_no_receipt, .text_title,.text_title_receipt, .name,.name_receipt, .birthday, .exitday, .mid_text, .mid_text_receipt,.graduate_prospects_date,.publish_date,.publish_date_receipt, .last_text_a, .last_text_b ,.last_text_receipt,.moneyarea,.proviso{
+    font-family: "游明朝", "YuMincho", serif !important;
+
   }
-  .publish_no,.birthday,.last_text_a,.last_text_b,.graduate_date{
-    font-size: 26px;
+  .publish_no,.birthday,.exitday,.last_text_a,.last_text_b,.last_text_receipt,.graduate_prospects_date,.name,.text_title,.mid_text,.mid_text_receipt{
+    font-size: 16px;
   }
-  .graduate_date{
+  .mid_text_receipt{
     line-height: 2;
+    text-align: center;
+  }
+  .moneyarea,.proviso{
+    font-size: 25px;
+    text-align: center;
+  }
+  .moneyarea{
+    padding: 20px 0;
+  }
+  .proviso{
+    padding: 10px 0;
+    position: relative;
+  }
+  .graduate_prospects_date{
+    line-height: 2;
+    text-align: right;
+    padding-bottom: 40px;
+  }
+  .name_receipt{
+    text-align: center;
+    font-size: 25px;
+    text-decoration: underline;
   }
   .last_text_a{
-    padding-top: 40px;
+    /*padding-top: 40px;*/
     line-height: 2;
+    text-align: left;
+    padding-bottom: 40px;
   }
+  .last_text_a span{
+    display: inherit;
+    width: 100%;
+    padding-bottom: 30px;
+  }
+  .last_text_a span:nth-child(2){
+    padding-bottom: 0;
+  }
+
   .last_text_b{
-    padding-top: 220px;
-    line-height: 2;
+    /*padding-top: 220px;*/
+    line-height: 1.5;
+    text-align: right;
+    position: relative;
+  }
+  .last_text_b span{
+    display: inherit;
+    width: 100%;
+  }
+  .last_text_b span:nth-child(2){
+    padding-bottom: 0;
+  }
+  .last_text_b div{
+    position: absolute;
+    z-index: 100;
+    top:10px;
+    right:-30px;
+  }
+  .proviso div{
+    position: absolute;
+    z-index: 100;
+    top:0;
+    right:100px;
   }
   .name{
-    font-size: 40px;
-    padding-top: 190px;
-    padding-right: 10px;
+    text-align: left;
+    padding-bottom: 15px;
   }
   .birthday{
-    letter-spacing: -2.1px;
-    padding-top: 95px;
-    padding-right: 20px;
+    text-align: left;
+    padding-bottom: 15px;
+  }
+  .exitday{
+    text-align: left;
   }
   .mid_text{
     line-height: 2.5;
-    font-size: 40px;
-    height: 440px;
-    padding-top: 20px;
+    padding-top: 35px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    text-align: left;
   }
-  .mid_text span{
+  .publish_date{
+    text-align: left;
+    padding-bottom: 20px;
+  }
+  .publish_date_receipt{
+    text-align: left;
+  }
+  .noAnddate{
+    padding-left: 400px;
+    padding-bottom: 30px;
+  }
+  .last_text_receipt{
+    text-align: left;
+    line-height: 2;
+    padding-left: 190px;
+  }
+  /*.mid_text span{
     font-size: 44px;
+  }*/
+  .publish_no{
+    text-align: right;
+  }
+  .publish_no_receipt{
+    text-align: left;
   }
   .text_title{
-    font-size: 90px;
-    padding-top: 30px;
-    padding-right: 20px;
+    text-align: center;
     line-height: 100px;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    font-size: 25px;
+  }
+  .text_title_receipt{
+    text-align: center;
+    padding-top: -50px;
+    padding-bottom: 30px;
+    font-size: 25px;
+  }
+  .nameAndbirthdayAndexitday{
+    padding-left: 200px;
   }
   .wrap{
     display: block;
     overflow: hidden;
-    height: 209mm;
-    width: 297mm; /* A4縦の幅 */
+    height: 296mm;
+    width: 210mm; /* A4縦の幅 */
     box-shadow: 0 .5mm 2mm rgba(0,0,0,.3); /* ドロップシャドウ */
     background: #fff;
     margin: 5mm;
   }
   .print_row{
-    padding-top: 200px;
-    padding-right: 180px;
+    padding:110px 90px 0 90px;
     page-break-after: always;
   }
   .preview{
@@ -239,9 +322,10 @@
       Print
     </header>
     <div id="progress_bar"><div class="percent">0%</div></div>
-    <h2>卒業証書一括印刷</h2>
-    <p><label for="">卒業年月日 </label><input id="graduate_input" type="date" name="graduate_date" value="" placeholder="2017/03/08" step="7"></p>
-    <label id="file_id" for="files"><input type="file" id="files" name="files[]" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple />
+    <h2>在学証明書＆領収書</h2>
+    <p><label for="">入学年月日 </label><input id="graduate_prospects_input" type="date" name="graduate_prospects_date" value="" placeholder="2017/03/08" step="7"></p>
+    <label id="file_id" for="files">
+      <input type="file" id="files" name="files[]" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple />
       <div class="overdesign">
       <i class="fa fa-cloud-upload" aria-hidden="true"></i>UPLOAD
       </div>
@@ -268,7 +352,6 @@
       <div class="print_btn" alt="印刷">
         <i class="fa fa-print" aria-hidden="true"></i>
       </div>
-
     </div>
   </main>
 <script type="text/javascript" src="js/readcsv.js"></script>
